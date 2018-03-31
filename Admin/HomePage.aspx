@@ -79,20 +79,46 @@
         <div class="col-lg-8 mx-auto">
           <h2>Iniciar sesión</h2>
             <div class=" text-center" >
-                <label class="text-justify"> Usuario:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                <asp:TextBox ID="TextBox1" runat="server" MaxLength="15"></asp:TextBox>
-                <br />
-                <br />
-                <label class="text-justify">Contraseña:</label>&nbsp;
-                <asp:TextBox ID="Txt_password" runat="server" MaxLength="15"></asp:TextBox>
-                <br />
-                <br />
-            </div>
-            <asp:Button ID="Btn_Login" runat="server" Text="Iniciar sesión" class="btn btn-default btn-lg" /> 
+              <table class="text-center" align="center">
+                  <tr>
+                      <td>
+                          <label class="text-justify"> Usuario:</label>
+                          <br />
+                          <br />
+                      </td>  
+                      <td>
+                          <asp:TextBox ID="Txt_Usuario" runat="server" MaxLength="50" ToolTip="Usuario: ejemplo: usuario@usuario.com"></asp:TextBox>
+                      <%--<asp:TextBox ID="Txt_Usuario" runat="server" MaxLength="50" TextMode="Email" ToolTip="Usuario: ejemplo: usuario@usuario.com"></asp:TextBox>--%>
+                          
+                          <br />
+                          <br />
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <label class="text-justify">Contraseña:</label>
+                          <br />
+                          <br />
+                      </td>
+                      <td>
+                          <asp:TextBox ID="Txt_password" runat="server" MaxLength="15" TextMode="Password" ToolTip="Contraseña"></asp:TextBox>
+                          <br />
+                          <br />
+                      </td>
+                  </tr>
+              </table>
+              <asp:label ID="Lbl_Error" runat="server" ForeColor ="Red" BorderStyle="None" Font-Bold="True"></asp:label>
+              <br />
+              <br />
+            </div>       
+            <asp:Button ID="Btn_Login" runat="server" Text="Iniciar sesión" class="btn btn-default btn-lg" OnClick="Btn_Login_Click" /> 
                 <br />
                 <br />
             <h6>Aun no tienes una cuenta?Aun no tienes una cuenta?</h6>      
-            <asp:Button ID="New_Account" runat="server" Text="Registrate" class="btn btn-default btn-lg" />
+            <asp:Button ID="New_Account" runat="server" Text="Registrate" class="btn btn-default btn-lg" PostBackUrl="~/Admin/New_User.aspx" />
+
+           <%-- ----Plan A Boton Mantenimiento-----%>
+            <asp:Button ID="Button1" runat="server" Text="Mantenimientos" class="btn btn-default btn-lg" PostBackUrl="~/Admin/Menu.aspx" />
         </div>
       </div>
     </section>
@@ -153,7 +179,7 @@
           <div class="col-lg-8 mx-auto">
             <h2>Redes Sociales</h2>
             <p> Búscanos en página oficial de la universidad Hispanoamérica: 
-              <a href="https://www.uhispanoamericana.ac.cr/Default.aspx"> Clik aquí</a>
+              <a href="https://www.uhispanoamericana.ac.cr/Default.aspx"> Click aquí</a>
             </p>
             <ul class="list-inline banner-social-buttons">
               <li class="list-inline-item">

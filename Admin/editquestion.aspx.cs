@@ -95,11 +95,11 @@ public partial class Admin_editquestion : System.Web.UI.Page
             {
                 //set the home link
                 string quizidstr = dreader["quizid"].ToString();
-                HyperLink homelink = (HyperLink)Master.FindControl("homelnk");
-                if (homelink != null)
-                {
-                    homelink.NavigateUrl = "setquestions?q=" + quizidstr;
-                }
+               // HyperLink homelink = (HyperLink)Master.FindControl("homelnk");
+               // if (homelink != null)
+               // {
+               //     homelink.NavigateUrl = "setquestions?q=" + quizidstr;
+               // }
 
                 //detect question type and set the template
                 qtype = dreader["type"].ToString();
@@ -347,7 +347,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updateanswer.ExecuteQuery(updateanswercmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Question updated successfully!";
+                lblmessage.Text = "Pregunta editada exitosamente";
 
                 bindquestion();
 
@@ -376,7 +376,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updateanswer.ExecuteQuery(updateanswercmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Question updated successfully!";
+                lblmessage.Text = "Pregunta editada exitosamente";
 
                 bindquestion();
 
@@ -440,7 +440,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updateanswer.ExecuteQuery(updateanswercmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Question added successfully!";
+                lblmessage.Text = "Pregunta editada exitosamente";
 
                 bindquestion();
 
@@ -469,7 +469,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updateanswer.ExecuteQuery(updateanswercmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Question added successfully!";
+                lblmessage.Text = "Pregunta editada exitosamente";
 
                 bindquestion();
 
@@ -507,11 +507,11 @@ public partial class Admin_editquestion : System.Web.UI.Page
 
                 string base64String = Convert.ToBase64String(uploadedBytes, 0, uploadedBytes.Length);
                 Image2.ImageUrl = "data:image/jpeg;base64," + base64String; //+ "?r" + DateTime.Now.Ticks.ToString();
-                StatusLabel2.Text = "Uploaded image: " + imageFilename;
+                StatusLabel2.Text = "Imagen cargada: " + imageFilename;
 
             }
             else
-                StatusLabel2.Text = "Upload status: Only JPEG files are accepted!";
+                StatusLabel2.Text = "Estado de carga: Solo imagenes JPEG son aceptadas";
 
         }
     }
@@ -537,11 +537,11 @@ public partial class Admin_editquestion : System.Web.UI.Page
 
                 string base64String = Convert.ToBase64String(uploadedBytes, 0, uploadedBytes.Length);
                 Image3.ImageUrl = "data:image/jpeg;base64," + base64String; //+ "?r" + DateTime.Now.Ticks.ToString();
-                StatusLabel3.Text = "Uploaded image: " + imageFilename;
+                StatusLabel3.Text = "Imagen cargada: " + imageFilename;
 
             }
             else
-                StatusLabel3.Text = "Upload status: Only JPEG files are accepted!";
+                StatusLabel3.Text = "Estado de carga: Solo imagenes JPEG son aceptadas";
 
         }
     }
@@ -571,7 +571,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updatequestion.ExecuteQuery(updateoptioncmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Category updated successfully!";
+                lblmessage.Text = "Categoria editada exitosamente";
 
                 bindquestion();
             }
@@ -588,7 +588,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updatequestion.ExecuteQuery(updateoptioncmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Category updated successfully!";
+                lblmessage.Text = "Categoria editada exitosamente";
 
                 bindquestion();
             }
@@ -625,7 +625,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updatequestion.ExecuteQuery(updateoptioncmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Answer updated successfully!";
+                lblmessage.Text = "Respuesta editada exitosamente";
 
                 bindquestion();
             }
@@ -688,7 +688,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 updatequestion.ExecuteQuery(updateoptioncmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Option updated successfully!";
+                lblmessage.Text = "Respuesta editada exitosamente";
 
                 bindquestion();
             }

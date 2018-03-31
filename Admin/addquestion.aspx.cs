@@ -62,12 +62,12 @@ public partial class Admin_addquestion : System.Web.UI.Page
             }
         }
 
-        //set the home link
-        HyperLink homelink = (HyperLink)Master.FindControl("homelnk");
-        if (homelink != null)
-        {
-            homelink.NavigateUrl = "setquestions?q=" + quizId;
-        }
+       //set the home link
+        //HyperLink homelink = (HyperLink)Master.FindControl("homelnk");
+        //if (homelink != null)
+        //{
+         //   homelink.NavigateUrl = "setquestions?q=" + quizId;
+        //}
 
         //add javascript event
         multiplequestionsubmit.Attributes.Add("onclick", "javascript: if ( Page_ClientValidate() ){" + multiplequestionsubmit.ClientID + ".disabled=true; " + multiplequestionsubmit.ClientID + ".value='Wait...';}" + ClientScript.GetPostBackEventReference(multiplequestionsubmit, ""));
@@ -89,7 +89,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
             UploadButton2.Visible = false;
             Image3.Visible = false;
             StatusLabel2.Visible = false;
-            ImageCheckBox1.Text = "Image";
+            ImageCheckBox1.Text = "Imagen";
 
         }
         else if (qtype == "single")
@@ -101,7 +101,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
             UploadButton1.Visible = false;
             Image2.Visible = false;
             StatusLabel1.Visible = false;
-            ImageCheckBox.Text = "Image";
+            ImageCheckBox.Text = "Imagen";
 
         }
         else
@@ -109,7 +109,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
             multipleoptiondiv.Visible = false;
             singleoptiondiv.Visible = false;
             lblmessage.Visible = true;
-            lblmessage.Text = "Please select a question type!";
+            lblmessage.Text = "Por favor seleccione un tipo de pregunta";
         }
     }
 
@@ -180,7 +180,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
                     if (String.IsNullOrEmpty(option1str) == true && String.IsNullOrEmpty(option2str) == true && String.IsNullOrEmpty(option3str) == true && String.IsNullOrEmpty(option4str) == true)
                     {
                         lblmessage.Visible = true;
-                        lblmessage.Text = "Please enter the answers";
+                        lblmessage.Text = "Por favor ingrese las respuestas";
                     }
                     else
                     {
@@ -297,7 +297,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
                     if (String.IsNullOrEmpty(option1str) == true && String.IsNullOrEmpty(option2str) == true && String.IsNullOrEmpty(option3str) == true && String.IsNullOrEmpty(option4str) == true)
                     {
                         lblmessage.Visible = true;
-                        lblmessage.Text = "Please enter the answers";
+                        lblmessage.Text = "Por favor ingrese las respuestas";
                     }
                     else
                     {
@@ -389,7 +389,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
                 else if (ImageCheckBox1.Checked == true & uploadedBytes == null)
                 {
                     lblmessage.Visible = true;
-                    lblmessage.Text = "Image checkbox is selected!";
+                    lblmessage.Text = "Checkbox de imagen esta seleccionado";
 
                 }
 
@@ -452,7 +452,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
             multiplequestionsubmit.Visible = true;
 
             lblmessage.Visible = true;
-            lblmessage.Text = "Question added successfully!";
+            lblmessage.Text = "Pregunta agregada exitosamente";
 
             ddltype.Visible = true;
             multipleoptiondiv.Visible = false;
@@ -639,7 +639,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
                 fs.Close();
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Question added successfully!";
+                lblmessage.Text = "Pregunta agregada exitosamente";
 
                 multipleoptiondiv.Visible = false;
                 singleoptiondiv.Visible = false;
@@ -684,7 +684,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
                 insertid = insertanswer.ReturnIDonExecuteQuery(insertquestionanswercmd);
 
                 lblmessage.Visible = true;
-                lblmessage.Text = "Question added successfully!";
+                lblmessage.Text = "Pregunta agregada exitosamente";
 
                 multipleoptiondiv.Visible = false;
                 singleoptiondiv.Visible = false;
@@ -695,7 +695,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
             else if (ImageCheckBox.Checked == true & uploadedBytes == null)
             {
                 lblmessage.Visible = true;
-                lblmessage.Text = "Image checkbox is selected!";
+                lblmessage.Text = "Checkbox de imagen esta seleccionada";
 
             }
 
@@ -727,11 +727,11 @@ public partial class Admin_addquestion : System.Web.UI.Page
                 string base64String = Convert.ToBase64String(uploadedBytes, 0, uploadedBytes.Length);
                 Image3.ImageUrl = "data:image/jpeg;base64," + base64String;
                 Image3.Visible = true;
-                StatusLabel2.Text = "Uploaded image: " + imageFilename;
+                StatusLabel2.Text = "Imagen cargada: " + imageFilename;
 
             }
             else
-                StatusLabel2.Text = "Upload status: Only JPEG files are accepted!";            
+                StatusLabel2.Text = "Estado de carga: Solo imagenes JPEG son aceptadas";            
           
         }
     }
@@ -758,11 +758,11 @@ public partial class Admin_addquestion : System.Web.UI.Page
                 string base64String = Convert.ToBase64String(uploadedBytes, 0, uploadedBytes.Length);
                 Image2.ImageUrl = "data:image/jpeg;base64," + base64String;
                 Image2.Visible = true;
-                StatusLabel1.Text = "Uploaded image: " + imageFilename;
+                StatusLabel1.Text = "Imagen cargada: " + imageFilename;
 
             }
             else
-                StatusLabel1.Text = "Upload status: Only JPEG files are accepted!";
+                StatusLabel1.Text = "Estado de carga: Solo imagenes JPEG son aceptadas";
 
         }
     }
