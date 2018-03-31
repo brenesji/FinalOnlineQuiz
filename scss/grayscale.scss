@@ -9,7 +9,7 @@ body {
   height: 100%;
 
   color: white;
-  background-color: black;
+  background-color: darkblue;
 }
 
 html {
@@ -67,7 +67,7 @@ a {
   text-transform: uppercase;
 
   border-bottom: 1px solid fade-out(white, .7);
-  background-color: black;
+  background-color: darkblue;
   .navbar-toggler {
     font-size: 14px;
 
@@ -90,12 +90,12 @@ a {
       &:hover {
         color: fade(white, 80%);
         outline: none;
-        background-color: transparent;
+        background-color: darkblue;
       }
       &:active,
       &:focus {
         outline: none;
-        background-color: transparent;
+        background-color: darkblue;
       }
     }
   }
@@ -109,13 +109,13 @@ a {
     letter-spacing: 1px;
 
     border-bottom: none;
-    background: transparent;
+    background: darkblue;
     &.navbar-shrink {
       padding-top: 10px;
       padding-bottom: 10px;
 
       border-bottom: 1px solid fade-out(white, .7);
-      background: black;
+      background: darkblue;
     }
     .nav-link.active {
       outline: none;
@@ -138,7 +138,7 @@ a {
 
   color: white;
   background: url('../Images/intro-bg.jpg') no-repeat bottom center scroll;
-  background-color: black;
+  background-color: darkblue;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -200,7 +200,7 @@ a {
 .download-section {
   color: white;
   background: url('../Images/downloads-bg.jpg') no-repeat center center scroll;
-  background-color: black;
+  background-color: darkblue;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -239,7 +239,7 @@ a {
   background-color: transparent;
   &:focus,
   &:hover {
-    color: black;
+    color: darkblue;
     border: 1px solid $primary;
     outline: none;
     background-color: $primary;
