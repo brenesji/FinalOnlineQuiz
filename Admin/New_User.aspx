@@ -62,7 +62,7 @@
     <form id="form1" runat="server">
     <!-- Login Section -->
     <section id="login" class="content-section text-center">
-      <div class="container">
+      <div id="register" runat="server" class="container">
         <div class="col-lg-8 mx-auto">
           <h2>Registro de Usuario</h2>
             <div class="text-center" >
@@ -286,7 +286,7 @@
 
                    </table>
                   <br/>
-                  <br/>
+                <br/>
                   <asp:Button ID="Submit" runat="server" Text="Registrar" class="btn btn-default btn-lg"  OnClick="Submit_Click"/>
                    <br />
                   <asp:Button ID="btn_Return" runat="server" Text="Home Page" class="btn btn-default btn-lg" visible="False" OnClick="btn_Return_Click"/>
@@ -295,6 +295,13 @@
             </div>
         </div>
       </div>
+        <div>
+             <asp:Label ID="lbMessage" runat="server" Font-Size="XX-Large" Visible="false"></asp:Label>
+            <br />
+         <br />
+        <asp:Button ID="btnExit" runat="server" OnClick="btnExit_Click" Text="Salir" Visible="false" class="btn btn-default btn-lg" />
+            </div>
+
     </section>
     
  <!-- Footer -->

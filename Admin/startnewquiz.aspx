@@ -55,7 +55,7 @@
         <asp:Label ID="lbMessage" runat="server" Font-Size="XX-Large"></asp:Label>
         <br />
          <br />
-        <asp:Button ID="btnExit" runat="server" OnClick="btnExit_Click" Text="Exit" class="btn btn-default btn-lg" />
+        <asp:Button ID="btnExit" runat="server" OnClick="btnExit_Click" Text="Salir" class="btn btn-default btn-lg" />
         <br />
         <asp:Label runat="server" id="lbQuestion" Height="50px" Width="500px" Font-Size="X-Large"/>
         <br />
@@ -71,7 +71,7 @@
         <br />
             <br />
         <br />
-        <asp:Button ID="btnNextmultiple" runat="server" OnClick="btnNext_Clickmultiple" Text="Next" ValidationGroup="quizvalidation" class="btn btn-default btn-lg" />
+        <asp:Button ID="btnNextmultiple" runat="server" OnClick="btnNext_Clickmultiple" Text="Siguiente" ValidationGroup="quizvalidation" class="btn btn-default btn-lg" />
         <br />
         <br />
             </div>
@@ -82,7 +82,7 @@
             <asp:Label ID="lberror" runat="server" ForeColor="#ff0000" Visible="false" /><br />
             <br />
         <br />
-        <asp:Button ID="btnNextsingle" runat="server" OnClick="btnNext_Clicksingle" Text="Next" ValidationGroup="txtanswersingle" class="btn btn-default btn-lg" />
+        <asp:Button ID="btnNextsingle" runat="server" OnClick="btnNext_Clicksingle" Text="Siguiente" ValidationGroup="txtanswersingle" class="btn btn-default btn-lg" />
         <br />
         <br />
             </div>

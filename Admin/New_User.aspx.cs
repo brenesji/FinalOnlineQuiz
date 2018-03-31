@@ -251,10 +251,18 @@ public partial class Admin_New_User : System.Web.UI.Page
         DropDownList_Provincia.Text, DropDownList_Canton.Text, DropDownList_Distrito.Text, DropDownList_HighSchool.Text,
         DropDownList_Gender.Text, txt_Telefono.Text, Txt_Date.Text, DropDownList_Country.Text,
         txt_Password.Text, txt_Cedula.Text);
-        btn_Return.Visible = true;
-        Submit.Enabled = false;
+        register.Visible = false;
+        lbMessage.Visible = true;
+        lbMessage.Text = "Registro completado exitosamente, por favor presione Salir para continuar";
+        btnExit.Visible = true;
 
     }
+
+    protected void btnExit_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/Homepage.aspx", true);
+    }
+
 
     public void Insert_Student(string iID_Usuario, string iNombre, string iPrimer_Apellido, string iSegundo_Apellido, string iProvincia, string iCanton, string iDistrito, string iInstitucion, string isexo, string itelefono, string iFecha, string iNacionalidad, string iPassword1, string iCedula)
     {

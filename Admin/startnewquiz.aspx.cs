@@ -178,7 +178,7 @@ public partial class _Default : Page
             multipleoptiondiv.Visible = false;
             singleoptiondiv.Visible = false;
             lbMessage.Visible = true;
-            lbMessage.Text = "Thank you for taking the test, please click exit to continue";
+            lbMessage.Text = "Gracias por realizar el examen, por favor presione Salir para continuar";
             btnExit.Visible = true;
         }
         else
