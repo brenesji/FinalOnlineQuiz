@@ -18,7 +18,49 @@ public partial class Admin_newquiz : System.Web.UI.Page
 
         //add javascript event
         submitquiz.Attributes.Add("onclick", "javascript: if ( Page_ClientValidate() ){" + submitquiz.ClientID + ".disabled=true; " + submitquiz.ClientID + ".value='Wait...';}" + ClientScript.GetPostBackEventReference(submitquiz, ""));
+
+
+        SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["quizConnectionString"].ConnectionString);
+        string query;
+        try
+        {
+            query = "SELECT distinct [title] FROM [quiz_questions]";
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                CheckBoxList1.DataSource = ds;
+                CheckBoxList1.DataTextField = "title";
+                CheckBoxList1.DataValueField = "title";
+                CheckBoxList1.DataBind();
+            }
+            else
+            {
+                Response.Write("No Results found");
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Write("<br>" + ex);
+        }
+        finally
+        {
+            con.Close();
+        }
+
     }
+
+
+
+
+    //protected void LoadQuestions(object sender, EventArgs e)
+    //{
+
+
+
+    //}
 
     //start new quiz
     protected void submitquiz_click(object sender, EventArgs e)
@@ -56,7 +98,7 @@ public partial class Admin_newquiz : System.Web.UI.Page
                 db insertnewquiz = new db();
                 insertnewquiz.ExecuteQuery(insertnew);
 
-                Response.Redirect("viewquizes", false);
+                Response.Redirect("viewquiz", false);
             }
         }
         else
@@ -65,4 +107,7 @@ public partial class Admin_newquiz : System.Web.UI.Page
             lblalert.Text = "Please enter the complusory fields and try again!";
         }
     }
+
+
+
 }
