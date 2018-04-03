@@ -31,13 +31,13 @@ using System.Web.UI.WebControls;
             string output = cmd.ExecuteScalar().ToString();
             string tipo = cmd1.ExecuteScalar().ToString();
 
-            if (output == Txt_Usuario.Text.Trim() & tipo == "U" | tipo == "P")
+            if (output == Txt_Usuario.Text.Trim() & tipo == "U")
             {
                 //Aqui creo una variable session
                 Session["user"] = Txt_Usuario.Text;
                 Response.Redirect("~/Admin/Student_Profile.aspx");
             }
-            else if (output == Txt_Usuario.Text.Trim() & tipo == "A" )
+            else if (output == Txt_Usuario.Text.Trim() & tipo == "A" | tipo == "P")
             {
                 //Aqui creo una variable session
                 Session["user"] = Txt_Usuario.Text;
