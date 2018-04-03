@@ -95,8 +95,38 @@
         <div class="row">
           <div class="col-lg-8 mx-auto">
             <h2>Examenes</h2>  
-              <a href="startnewquiz"> Iniciar La Prueba</a>
-               <%--<link href="~/Admin/startnewquiz" rel='stylesheet' type='text/css'>--%>
+            <br/>
+            <br/>
+              <div id="examdiv" runat="server" class="text-center">
+          <asp:Repeater ID="examrepeater" runat="server" OnItemCommand="examrepeater_ItemCommand">
+            <HeaderTemplate>
+                <table style="width: 100%">
+                    <tr style="background-color: gray; color: white;">
+                        <td style="height: 25px; padding-left: 10px; font-weight: bold;">Examen</td>
+                        <td style="height: 25px; padding-left: 10px; font-weight: bold;">Descripcion</td>
+                        <td style="height: 25px; padding-left: 10px; font-weight: bold;">&nbsp;</td>
+                        
+                    </tr>
+            </HeaderTemplate>
+            <ItemTemplate>
+                <tr style="background-color: darkgray;border-color:white;">
+                    <td style="height: 25px; padding-left: 10px;margin:0 auto 0 auto;text-align:left">
+                        <asp:Label ID="lblquizname" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "name")%>' Font-Bold="true" ></asp:Label>
+                    </td>
+                    <td style="height: 25px; padding-left: 10px;">
+                        <asp:Label ID="lblfromdate" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "description")%>' Font-Bold="true"></asp:Label>
+                    </td>
+                    <td style="height: 25px; padding-left: 10px;">
+                        <asp:LinkButton ID="lnkIniciar" runat="server" CommandName="Iniciar" Font-Bold="true" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "id") + "|" +  DataBinder.Eval(Container.DataItem, "name") %>' CausesValidation="false">Iniciar</asp:LinkButton>
+                    </td>
+                   
+                </tr>
+            </ItemTemplate>
+            <FooterTemplate>
+                </table>
+            </FooterTemplate>
+        </asp:Repeater>
+                  </div>
           </div>
         </div>
       </div>
@@ -104,7 +134,7 @@
 
 
 <footer class="container-fluid">
-  <p>@All rights Reserver</p>
+  <p>@All Rights Reserved</p>
 </footer>
 
         <!-- Bootstrap core JavaScript -->

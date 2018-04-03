@@ -38,6 +38,8 @@ public partial class _Default : Page
     string selectedanswer = "";
     string type = "";
     int numques = 0;
+    int examid = 0;
+    string userid = "";
     public static Stopwatch sw;
 
 
@@ -58,6 +60,11 @@ public partial class _Default : Page
             lberror.Visible = false;
             lbMessage.Visible = false;
             btnExit.Visible = false;
+            examid = Convert.ToInt32(Session["examid"]);
+            userid = Session["user"].ToString();
+            Page.Session["userid"] = userid;
+            Page.Session["examid"] = examid;
+
 
             sw = new Stopwatch();
             sw.Start();
@@ -78,16 +85,15 @@ public partial class _Default : Page
             }
         }
 
-        //add javascript event
-        //this.Form.DefaultButton = this.btnNext.UniqueID;
-       //btnNext.Attributes.Add("onclick", "javascript: if ( Page_ClientValidate() ){" + btnNext.ClientID + ".disabled=true; " + btnNext.ClientID + ".value='Wait...';}" + ClientScript.GetPostBackEventReference(btnNext, ""));
     }
 
     //get the recent quizes
     protected void Bindquizes()
     {
+        examid = Convert.ToInt32(Page.Session["examid"]); 
         SqlDataReader dReader;
-        SqlCommand getquizescmd = new SqlCommand("select id, name, description, startdate, enddate, termsandconditions from " + quizdetailstable);
+        SqlCommand getquizescmd = new SqlCommand("select id, name, description from " + quizdetailstable + " where id=@examid");
+        getquizescmd.Parameters.AddWithValue("examid", examid);
 
         db getquizeslist = new db();
         dReader = getquizeslist.returnDataReader(getquizescmd);
@@ -112,9 +118,6 @@ public partial class _Default : Page
                 Page.Session["quizname"] = quizname;
 
                 description = dReader["description"].ToString();
-                start = Convert.ToDateTime(dReader["startdate"].ToString());
-                end = Convert.ToDateTime(dReader["enddate"].ToString());
-                terms = dReader["termsandconditions"].ToString();
 
                 //show quiz if start/end date is valid
                 if ((updatedate < start) && (updatedate > end))
@@ -151,8 +154,10 @@ public partial class _Default : Page
         questionID = new int [numques];
         Page.Session["numques"] = numques;
         DataTable dTable = new DataTable();
+        examid = Convert.ToInt32(Page.Session["examid"]);
         //Get questions IDs
-        SqlCommand getquestions = new SqlCommand("select id from " + quizquestionstable + " where quizid='1' order by questionorder ASC");
+        SqlCommand getquestions = new SqlCommand("select id from " + quizquestionstable + " where quizid=@examid order by questionorder ASC");
+        getquestions.Parameters.AddWithValue("examid", examid);
 
         db getquestionslist = new db();
         dTable = getquestionslist.returnDataTable(getquestions);
@@ -386,7 +391,7 @@ public partial class _Default : Page
         quizId = Convert.ToInt32(Page.Session["quizid"]);
         selectedanswer = Page.Session["selectedanswer"].ToString();
         quizname = Page.Session["quizname"].ToString();
-
+        userid = Page.Session["userid"].ToString();
 
         string accurateanswer = "";
 
@@ -400,9 +405,9 @@ public partial class _Default : Page
         }
 
 
-        SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, 'mcgusd@hotmail.com', @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
+        SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
         insertnew.Parameters.AddWithValue("quizid", quizId);
-        //insertnew.Parameters.AddWithValue("userid", userid);
+        insertnew.Parameters.AddWithValue("userid", userid);
         insertnew.Parameters.AddWithValue("question", question);
         insertnew.Parameters.AddWithValue("user_answer", selectedanswer);
         insertnew.Parameters.AddWithValue("correct_answer", answer);
@@ -447,7 +452,7 @@ public partial class _Default : Page
         quizId = Convert.ToInt32(Page.Session["quizid"]);
         selectedanswer = Page.Session["selectedanswer"].ToString();
         quizname = Page.Session["quizname"].ToString();
-
+        userid = Page.Session["userid"].ToString();
 
         string accurateanswer = "";
 
@@ -461,9 +466,9 @@ public partial class _Default : Page
         }
 
 
-        SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, 'mcgusd@hotmail.com', @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
+        SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
         insertnew.Parameters.AddWithValue("quizid", quizId);
-        //insertnew.Parameters.AddWithValue("userid", userid);
+        insertnew.Parameters.AddWithValue("userid", userid);
         insertnew.Parameters.AddWithValue("question", question);
         insertnew.Parameters.AddWithValue("user_answer", selectedanswer);
         insertnew.Parameters.AddWithValue("correct_answer", answer);
