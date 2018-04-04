@@ -68,7 +68,7 @@
             <asp:Label ID="lblanswer" runat="server" Font-Bold="true" ForeColor="Red" Visible="false">Respuesta</asp:Label>&nbsp;&nbsp;
             <asp:DropDownList ID="ddlmultipleanswer" runat="server" AutoPostBack="false" DataTextField="questionoption" DataValueField="id">                
             </asp:DropDownList><br /><br /><br />
-            <asp:Button ID="multipleoptionsubmit" runat="server" OnClick="multipleoptionsubmit_Click" Text="Submit" class="btn btn-default btn-lg" ValidationGroup="multipleoptionvalidation" />
+            <asp:Button ID="multipleoptionsubmit" runat="server" OnClick="multipleoptionsubmit_Click" Text="Editar" class="btn btn-default btn-lg" ValidationGroup="multipleoptionvalidation" />
         </div>
 
 
@@ -100,7 +100,7 @@
                 <asp:ListItem>Razmto. de figuras</asp:ListItem>
                 <asp:ListItem>Razmto. cuantitativo</asp:ListItem>
             </asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="ddlCategorias2" Display="Dynamic" ErrorMessage="Por favor ingrese la categoria" SetFocusOnError="true" ForeColor="Red" ValidationGroup="singleoptionvalidation" /><br /><br /><br />
-            <asp:Button ID="singleoptionsubmit" runat="server" OnClick="singleoptionsubmit_Click" Text="Submit" ValidationGroup="singleoptionvalidation" class="btn btn-default btn-lg" />
+            <asp:Button ID="singleoptionsubmit" runat="server" OnClick="singleoptionsubmit_Click" Text="Editar" ValidationGroup="singleoptionvalidation" class="btn btn-default btn-lg" />
         </div>
         <br /><asp:Label ID="lblmessage" runat="server" ForeColor="#ff0000" Visible="false" /><br />
         <br />

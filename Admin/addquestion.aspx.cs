@@ -92,7 +92,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
             ImageCheckBox1.Text = "Imagen";
 
         }
-        else if (qtype == "single")
+        else if (qtype == "unica")
         {
             lblmessage.Visible = false;
             multipleoptiondiv.Visible = false;

@@ -39,7 +39,7 @@
             <b>Seleccione el tipo de pregunta</b>&nbsp;&nbsp;
         <asp:DropDownList ID="ddltype" runat="server" AutoPostBack="true" OnSelectedIndexChanged="questiontypechanged" class="btn btn-default btn-lg">
             <asp:ListItem Text="Por favor seleccione" Value="0" Selected="True" />
-            <asp:ListItem Text="Single" Value="1" />
+            <asp:ListItem Text="Unica" Value="1" />
             <asp:ListItem Text="Multiple" Value="2" />
             <%--<asp:ListItem Text="Text" Value="2" />--%>
         </asp:DropDownList><br />
@@ -82,7 +82,7 @@
                 <asp:ListItem>Razmto. de figuras</asp:ListItem>
                 <asp:ListItem>Razmto. cuantitativo</asp:ListItem>
             </asp:DropDownList><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="ddlCategorias1" Display="Dynamic" ErrorMessage="Por favor ingrese la categoria" SetFocusOnError="true" ForeColor="Red" ValidationGroup="multipleoptionvalidation" /><br /><br />
-            <asp:Button ID="multiplequestionsubmit" runat="server" OnClick="multiplequestionsubmit_Click" Text="Submit" class="btn btn-default btn-lg" ValidationGroup="multipleoptionvalidation" /><br /><br />
+            <asp:Button ID="multiplequestionsubmit" runat="server" OnClick="multiplequestionsubmit_Click" Text="Agregar" class="btn btn-default btn-lg" ValidationGroup="multipleoptionvalidation" /><br /><br />
             <asp:Label ID="lblanswer" runat="server" Font-Bold="true" ForeColor="Red" Visible="false">Por favor ingrese la respuesta</asp:Label>&nbsp;&nbsp;
             <asp:DropDownList ID="ddlmultipleanswer" runat="server" AutoPostBack="false" Visible="false">
                 <asp:ListItem Text="option 1" Value="multipleoption1" Selected="True" />
@@ -91,7 +91,7 @@
                 <asp:ListItem Text="option 4" Value="multipleoption4" />
                 <asp:ListItem Text="option 5" Value="multipleoption5" />
             </asp:DropDownList><br /><br />
-            <asp:Button ID="multipleanswersubmit" runat="server" OnClick="multipleanswersubmit_Click" Text="Submit" class="btn btn-default btn-lg" Visible="false" />
+            <asp:Button ID="multipleanswersubmit" runat="server" OnClick="multipleanswersubmit_Click" Text="Agregar" class="btn btn-default btn-lg" Visible="false" />
         </div>
 
         <div style="clear: both"></div>
@@ -121,7 +121,7 @@
                 <asp:ListItem>Razmto. de figuras</asp:ListItem>
                 <asp:ListItem>Razmto. cuantitativo</asp:ListItem>
             </asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="ddlCategorias2" Display="Dynamic" ErrorMessage="Por favor ingrese la categoria" SetFocusOnError="true" ForeColor="Red" ValidationGroup="singleoptionvalidation" /><br /><br />
-            <asp:Button ID="singleoptionsubmit" runat="server" OnClick="singleoptionsubmit_Click" Text="Submit" class="btn btn-default btn-lg" ValidationGroup="singleoptionvalidation" />
+            <asp:Button ID="singleoptionsubmit" runat="server" OnClick="singleoptionsubmit_Click" Text="Agregar" class="btn btn-default btn-lg" ValidationGroup="singleoptionvalidation" />
         </div>
         <br /><br />        
     </div>

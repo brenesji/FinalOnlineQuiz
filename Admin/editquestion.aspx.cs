@@ -131,7 +131,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
                         UploadButton3.Visible = true;
                     }
                 }
-                else if (qtype == "single")
+                else if (qtype == "unica")
                 {
                     multipleoptiondiv.Visible = false;
                     singleoptiondiv.Visible = true;
