@@ -215,8 +215,8 @@
                            </td>
                             <td>
                                <asp:DropDownList ID="DropDownList_Gender" runat="server" style="width: 250px;">
-                                   <asp:ListItem Value="0">Hombre</asp:ListItem>
-                                   <asp:ListItem Value="1">Mujer</asp:ListItem>
+                                   <asp:ListItem Value="M">Hombre</asp:ListItem>
+                                   <asp:ListItem Value="F">Mujer</asp:ListItem>
                                 </asp:DropDownList> <br /><br />
                            </td>
                            <td class="text-left">
