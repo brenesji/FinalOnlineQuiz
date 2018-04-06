@@ -44,6 +44,7 @@
                 <%--<asp:MenuItem Text="Mantenimiento Usuarios" Value="MantenimientoUsuarios" ></asp:MenuItem>--%>
                 <asp:MenuItem NavigateUrl="~/Admin/viewquiz" Text="Mantenimiento Examenes" Value="MantenimientoPreguntas"></asp:MenuItem>
                 <asp:MenuItem NavigateUrl="~/Admin/startnewquiz" Text="Realizar el Examen" Value="MantenimientoPreguntas"></asp:MenuItem>
+                <asp:MenuItem NavigateUrl="~/Admin/Reports" Text="Reportes" Value="MantenimientoPreguntas"></asp:MenuItem>
 
                 </Items>
         </asp:Menu>

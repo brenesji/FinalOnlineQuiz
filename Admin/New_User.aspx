@@ -48,7 +48,7 @@
 <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'/>
 
 <!-- Custom styles for this template -->
-<link href="~/css/grayscale.min.css" rel="stylesheet"/>
+<link href="~/Styles/grayscale.min.css" rel="stylesheet"/>
 
 </head>
      <div style="float:left;padding-left:15px;">
