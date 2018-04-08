@@ -44,7 +44,7 @@ public partial class Admin_Reports : System.Web.UI.Page
             schoolreportdiv.Visible = false;
             genderreportdiv.Visible = false;
         }
-        else if (reporttype == "por estudiantes")
+        else if (reporttype == "por estudiantes por fecha")
         {
             namereportdiv.Visible = false;
             emailreportdiv.Visible = false;
@@ -55,7 +55,7 @@ public partial class Admin_Reports : System.Web.UI.Page
             FechaStudents1.Visible = true;
             FechaStudents2.Visible = true;
         }
-        else if (reporttype == "por direccion")
+        else if (reporttype == "por direccion por fecha")
         {
             namereportdiv.Visible = false;
             emailreportdiv.Visible = false;
@@ -69,7 +69,7 @@ public partial class Admin_Reports : System.Web.UI.Page
             FechaAddress2.Visible = true;
             Add_Provincia();
         }
-        else if (reporttype == "por colegio")
+        else if (reporttype == "por colegio por fecha")
         {
             namereportdiv.Visible = false;
             emailreportdiv.Visible = false;
@@ -85,7 +85,7 @@ public partial class Admin_Reports : System.Web.UI.Page
             FechaSchool2.Visible = true;
             Add_Institucion();
         }
-        else if (reporttype == "por sexo")
+        else if (reporttype == "por sexo por fecha")
         {
             namereportdiv.Visible = false;
             emailreportdiv.Visible = false;
@@ -129,7 +129,7 @@ public partial class Admin_Reports : System.Web.UI.Page
 
 
         DataTable dTable1 = new DataTable();
-        SqlCommand cmd1 = new SqlCommand("select u.nombres, q.quiz_name , q.question , q.correct_answer , q.user_answer, q.accurate_answer ,FORMAT(q.lastupdated, 'dd-MM-yyyy') Fecha  from usuarios as u inner join quiz_responses as q on u.ID=q.userid where LOWER(u.nombres)=@nombre group by u.nombres, q.quiz_name, q.question , q.correct_answer, q.user_answer ,q.accurate_answer, q.lastupdated order by q.lastupdated DESC");
+        SqlCommand cmd1 = new SqlCommand("select q.quiz_name , q.question ,qq.category ,q.correct_answer , q.user_answer, q.accurate_answer ,FORMAT(q.lastupdated, 'dd-MM-yyyy') Fecha  from usuarios as u inner join quiz_responses as q on u.ID=q.userid inner join quiz_questions as qq on q.quizid=qq.quizid where LOWER(u.nombres)=@nombre and q.question=qq.title group by u.nombres, q.quiz_name, q.question , q.correct_answer, q.user_answer ,q.accurate_answer, q.lastupdated, qq. category order by q.lastupdated DESC");
         cmd1.Parameters.AddWithValue("nombre", txtname.Text.Trim().ToLower());
 
         db getquestionslist1 = new db();
@@ -206,7 +206,7 @@ public partial class Admin_Reports : System.Web.UI.Page
 
 
         DataTable dTable1 = new DataTable();
-        SqlCommand cmd1 = new SqlCommand("select u.nombres, q.quiz_name , q.question , q.correct_answer , q.user_answer, q.accurate_answer ,FORMAT(q.lastupdated, 'dd-MM-yyyy') Fecha  from usuarios as u inner join quiz_responses as q on u.ID=q.userid where LOWER(u.ID)=@email group by u.nombres, q.quiz_name, q.question , q.correct_answer, q.user_answer ,q.accurate_answer, q.lastupdated order by q.lastupdated DESC");
+        SqlCommand cmd1 = new SqlCommand("select q.quiz_name , q.question ,qq.category ,q.correct_answer , q.user_answer, q.accurate_answer ,FORMAT(q.lastupdated, 'dd-MM-yyyy') Fecha  from usuarios as u inner join quiz_responses as q on u.ID=q.userid inner join quiz_questions as qq on q.quizid=qq.quizid where LOWER(u.ID)=@email and q.question=qq.title group by u.nombres, q.quiz_name, q.question , q.correct_answer, q.user_answer ,q.accurate_answer, q.lastupdated, qq. category order by q.lastupdated DESC");
         cmd1.Parameters.AddWithValue("email", txtemail.Text.Trim().ToLower());
 
         db getquestionslist1 = new db();
@@ -283,8 +283,62 @@ public partial class Admin_Reports : System.Web.UI.Page
             GridViewStudents1.DataBind();
         }
 
+
     }
 
+    protected void GridStudents_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Ver")
+        {
+            string ID = e.CommandArgument.ToString();
+
+            Session["ID"] = ID;
+            Response.Redirect("~/Admin/StudentReport.aspx", true);
+            
+        }
+
+    }
+
+
+    protected void GridAddress_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Ver")
+        {
+            string ID = e.CommandArgument.ToString();
+
+            Session["ID"] = ID;
+            Response.Redirect("~/Admin/StudentReport.aspx", true);
+
+        }
+
+    }
+
+    protected void GridSchool_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Ver")
+        {
+            string ID = e.CommandArgument.ToString();
+
+            Session["ID"] = ID;
+            Response.Redirect("~/Admin/StudentReport.aspx", true);
+
+        }
+
+    }
+
+
+    protected void GridGender_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Ver")
+        {
+            string ID = e.CommandArgument.ToString();
+
+            Session["ID"] = ID;
+            Response.Redirect("~/Admin/StudentReport.aspx", true);
+
+        }
+
+    }
 
     protected void addressreportsubmit_Click(object sender, EventArgs e)
     {
