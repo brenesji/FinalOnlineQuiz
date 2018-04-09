@@ -361,14 +361,14 @@ public partial class _Default : Page
                 if (val == true & val1 == false)
                 {
                         lberror.Visible = true;
-                        lberror.Text = "Response only allow numbers";
+                        lberror.Text = "Respuesta solo permite numeros";
                         txtanswer.Text = null;  
                 }
 
                 else if (val == false & val1 == true)
                 {
                     lberror.Visible = true;
-                    lberror.Text = "Response only allow text";
+                    lberror.Text = "Respuesta solo permite texto";
                     txtanswer.Text = null;
 
                 }
@@ -397,11 +397,11 @@ public partial class _Default : Page
 
         if (selectedanswer.ToLower().Trim().Replace(" ", "") == answer.ToLower().Trim().Replace(" ", ""))
         {
-            accurateanswer = "Y";
+            accurateanswer = "1";
         }
         else
         {
-            accurateanswer = "N";
+            accurateanswer = "0";
         }
 
 
@@ -458,11 +458,11 @@ public partial class _Default : Page
 
         if (selectedanswer.ToLower().Trim().Replace(" ", "") == answer.ToLower().Trim().Replace(" ", ""))
         {
-            accurateanswer = "Y";
+            accurateanswer = "1";
         }
         else
         {
-            accurateanswer = "N";
+            accurateanswer = "0";
         }
 
 
@@ -511,8 +511,23 @@ public partial class _Default : Page
 
         else
         {
+          /*  numques - 1
+
+            SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
+            insertnew.Parameters.AddWithValue("quizid", quizId);
+            insertnew.Parameters.AddWithValue("userid", userid);
+            insertnew.Parameters.AddWithValue("question", question);
+            insertnew.Parameters.AddWithValue("user_answer", selectedanswer);
+            insertnew.Parameters.AddWithValue("correct_answer", answer);
+            insertnew.Parameters.AddWithValue("accurate_answer", accurateanswer);
+            insertnew.Parameters.AddWithValue("quiz_name", quizname);
+            insertnew.Parameters.AddWithValue("lastupdated", updatedate);
+
+            db insertnewquestion = new db();
+            insertnewquestion.ExecuteQuery(insertnew);*/
+
             sw.Stop();
-            Response.Redirect("~/Admin/Menu.aspx", true);
+            Response.Redirect("~/Admin/HomaPage.aspx", true);
 
 
         }
@@ -523,7 +538,7 @@ public partial class _Default : Page
 
     protected void btnExit_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Admin/Menu.aspx", true);
+        Response.Redirect("~/Admin/HomePage.aspx", true);
     }
 
 
