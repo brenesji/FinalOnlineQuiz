@@ -139,22 +139,24 @@ public partial class _Default : Page
     protected void LoadQuestion()
     {
 
+        examid = Convert.ToInt32(Page.Session["examid"]);
 
         string databaseString = ConfigurationManager.ConnectionStrings["quizConnectionString"].ConnectionString;
         SqlConnection conn = new SqlConnection(databaseString);
 
         conn.Open();
         //Obtains amount of questions of the quiz
-        SqlCommand numquestions = new SqlCommand("select count(*) from " + quizquestionstable + " where quizid='1'", conn);
+        SqlCommand numquestions = new SqlCommand("select count(*) from " + quizquestionstable + " where quizid=@quizid", conn);
+        numquestions.Parameters.AddWithValue("quizid",examid);
         numques = Convert.ToInt32(numquestions.ExecuteScalar());
 
         conn.Close();
 
 
-        questionID = new int [numques];
+        questionID = new int [numques]; //Creates array with total number of exam questions
         Page.Session["numques"] = numques;
         DataTable dTable = new DataTable();
-        examid = Convert.ToInt32(Page.Session["examid"]);
+        
         //Get questions IDs
         SqlCommand getquestions = new SqlCommand("select id from " + quizquestionstable + " where quizid=@examid order by questionorder ASC");
         getquestions.Parameters.AddWithValue("examid", examid);
@@ -169,7 +171,7 @@ public partial class _Default : Page
             questionID[cont] = row.Field<int>(0); //Pass questions IDs to array 
             cont++;
         }
-                
+
 
         if (questcounter > numques-1)
         {
@@ -229,6 +231,7 @@ public partial class _Default : Page
                 else
                 {
                 singleoptiondiv.Visible = true;
+                txtanswer.Focus();
                 BindQuestionsSingleOption();
 
                 }
@@ -337,93 +340,78 @@ public partial class _Default : Page
 
     }
 
-    
-
-
-    protected void txtanswer_TextChanged(object sender, EventArgs e)
-    {
-
-        string answerstr = "";
-        lberror.Visible = false;
-
-        Page.Validate();
-        if (Page.IsValid)
-        {
-          //  string reqcontrol = getPostBackControlName();
-
-            //if (reqcontrol == "txtanswer")
-           // {
-                answer = Page.Session["answer"].ToString();
-                answerstr = txtanswer.Text.Trim();
-                bool val = System.Text.RegularExpressions.Regex.IsMatch(answer, @"\d");
-                bool val1 = System.Text.RegularExpressions.Regex.IsMatch(answerstr, @"\d");
-
-                if (val == true & val1 == false)
-                {
-                        lberror.Visible = true;
-                        lberror.Text = "Respuesta solo permite numeros";
-                        txtanswer.Text = null;  
-                }
-
-                else if (val == false & val1 == true)
-                {
-                    lberror.Visible = true;
-                    lberror.Text = "Respuesta solo permite texto";
-                    txtanswer.Text = null;
-
-                }
-
-          //  }
-
-            selectedanswer = txtanswer.Text;
-            Page.Session["selectedanswer"] = selectedanswer;
-
-        }
-
-    }
 
 
     protected void btnNext_Clicksingle(object sender, EventArgs e)
     {
+        string answerstr = "";
 
         answer = Page.Session["answer"].ToString();
         question = Page.Session["question"].ToString();
         quizId = Convert.ToInt32(Page.Session["quizid"]);
-        selectedanswer = Page.Session["selectedanswer"].ToString();
+        //selectedanswer = Page.Session["selectedanswer"].ToString();
         quizname = Page.Session["quizname"].ToString();
         userid = Page.Session["userid"].ToString();
 
-        string accurateanswer = "";
+        answer = Page.Session["answer"].ToString();
+        answerstr = txtanswer.Text.Trim();
+        bool val = System.Text.RegularExpressions.Regex.IsMatch(answer, @"\d");
+        bool val1 = System.Text.RegularExpressions.Regex.IsMatch(answerstr, @"\d");
 
-        if (selectedanswer.ToLower().Trim().Replace(" ", "") == answer.ToLower().Trim().Replace(" ", ""))
+        if (val == true & val1 == false)
         {
-            accurateanswer = "1";
+            lberror.Visible = true;
+            lberror.Text = "Respuesta solo permite numeros";
+            txtanswer.Text = null;
+
         }
+
+        else if (val == false & val1 == true)
+        {
+            lberror.Visible = true;
+            lberror.Text = "Respuesta solo permite texto";
+            txtanswer.Text = null;
+
+        }
+
         else
         {
-            accurateanswer = "0";
+            selectedanswer = txtanswer.Text;
+            //Page.Session["selectedanswer"] = selectedanswer;
+
+            string accurateanswer = "";
+
+            if (selectedanswer.ToLower().Trim().Replace(" ", "") == answer.ToLower().Trim().Replace(" ", ""))
+            {
+                accurateanswer = "1";
+            }
+            else
+            {
+                accurateanswer = "0";
+            }
+
+
+            SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
+            insertnew.Parameters.AddWithValue("quizid", quizId);
+            insertnew.Parameters.AddWithValue("userid", userid);
+            insertnew.Parameters.AddWithValue("question", question);
+            insertnew.Parameters.AddWithValue("user_answer", selectedanswer);
+            insertnew.Parameters.AddWithValue("correct_answer", answer);
+            insertnew.Parameters.AddWithValue("accurate_answer", accurateanswer);
+            insertnew.Parameters.AddWithValue("quiz_name", quizname);
+            insertnew.Parameters.AddWithValue("lastupdated", updatedate);
+
+            db insertnewquestion = new db();
+            insertnewquestion.ExecuteQuery(insertnew);
+
+            lberror.Visible = false;
+            Image.Visible = false;
+            txtanswer.Text = null;
+            questcounter = Convert.ToInt32(Page.Session["questcounter"]);
+            numques = Convert.ToInt32(Page.Session["numques"]);
+            LoadQuestion();
+
         }
-
-
-        SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
-        insertnew.Parameters.AddWithValue("quizid", quizId);
-        insertnew.Parameters.AddWithValue("userid", userid);
-        insertnew.Parameters.AddWithValue("question", question);
-        insertnew.Parameters.AddWithValue("user_answer", selectedanswer);
-        insertnew.Parameters.AddWithValue("correct_answer", answer);
-        insertnew.Parameters.AddWithValue("accurate_answer", accurateanswer);
-        insertnew.Parameters.AddWithValue("quiz_name", quizname);
-        insertnew.Parameters.AddWithValue("lastupdated", updatedate);
-
-        db insertnewquestion = new db();
-        insertnewquestion.ExecuteQuery(insertnew);
-
-        lberror.Visible = false;
-        Image.Visible = false;
-        txtanswer.Text = null;
-        questcounter = Convert.ToInt32(Page.Session["questcounter"]);
-        numques = Convert.ToInt32(Page.Session["numques"]);
-        LoadQuestion();
 
     }
 
@@ -499,7 +487,7 @@ public partial class _Default : Page
             if (min < 10)
                 Label1.Text = "0" + min;
             else
-              Label1.Text = min.ToString();
+                Label1.Text = min.ToString();
 
             Label1.Text += " : ";
 
@@ -511,29 +499,128 @@ public partial class _Default : Page
 
         else
         {
-          /*  numques - 1
-
-            SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
-            insertnew.Parameters.AddWithValue("quizid", quizId);
-            insertnew.Parameters.AddWithValue("userid", userid);
-            insertnew.Parameters.AddWithValue("question", question);
-            insertnew.Parameters.AddWithValue("user_answer", selectedanswer);
-            insertnew.Parameters.AddWithValue("correct_answer", answer);
-            insertnew.Parameters.AddWithValue("accurate_answer", accurateanswer);
-            insertnew.Parameters.AddWithValue("quiz_name", quizname);
-            insertnew.Parameters.AddWithValue("lastupdated", updatedate);
-
-            db insertnewquestion = new db();
-            insertnewquestion.ExecuteQuery(insertnew);*/
-
             sw.Stop();
-            Response.Redirect("~/Admin/HomaPage.aspx", true);
+            Autofill();
+            Response.Redirect("~/Admin/HomePage.aspx", true);
 
 
         }
 
     }
 
+
+    public void Autofill()
+    {
+        questcounter = Convert.ToInt32(Page.Session["questcounter"]);
+        numques = Convert.ToInt32(Page.Session["numques"]);
+        quizId = Convert.ToInt32(Page.Session["quizid"]);
+        quizname = Page.Session["quizname"].ToString();
+        userid = Page.Session["userid"].ToString();
+
+        questionID = new int[numques]; //Creates array with total number of exam questions
+        Page.Session["numques"] = numques;
+        DataTable dTable = new DataTable();
+
+        //Get questions IDs
+        SqlCommand getquestions = new SqlCommand("select id from " + quizquestionstable + " where quizid=@examid order by questionorder ASC");
+        getquestions.Parameters.AddWithValue("examid", quizId);
+
+        db getquestionslist = new db();
+        dTable = getquestionslist.returnDataTable(getquestions);
+
+        int cont = 0;
+
+        foreach (DataRow row in dTable.Rows)
+        {
+            questionID[cont] = row.Field<int>(0); //Pass questions IDs to array 
+            cont++;
+        }
+
+        questcounter = questcounter - 1;
+
+        while (questcounter <= numques -1)
+        {
+
+            string tipo = "";
+            SqlDataReader dreader;
+            SqlCommand question = new SqlCommand("select type from " + quizquestionstable + " where id=@qID");
+            question.Parameters.AddWithValue("qID", questionID[questcounter]);
+
+            db getorder = new db();
+            dreader = getorder.returnDataReader(question);
+
+            while (dreader.Read())
+            {
+
+                tipo = dreader["type"].ToString();
+
+
+                if (tipo == "multiple")
+
+                {
+                    SqlDataReader dReader;
+                    SqlCommand multiple = new SqlCommand("select qq.title, a.questionoption from " + quizquestionoptionstable + " as a inner join " + quizquestionanswertable + " as b on b.optionid=a.id inner join " + quizquestionstable + " as qq on b.questionid=qq.questionorder where a.questionid=@qID");
+                    multiple.Parameters.AddWithValue("qID", questionID[questcounter]);
+
+                    db multiplelist = new db();
+                    dReader = multiplelist.returnDataReader(multiple);
+
+                    while (dReader.Read())
+                    {
+
+                        SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
+                        insertnew.Parameters.AddWithValue("quizid", quizId);
+                        insertnew.Parameters.AddWithValue("userid", userid);
+                        insertnew.Parameters.AddWithValue("question", dReader["title"].ToString());
+                        insertnew.Parameters.AddWithValue("user_answer", "N");
+                        insertnew.Parameters.AddWithValue("correct_answer", dReader["questionoption"].ToString());
+                        insertnew.Parameters.AddWithValue("accurate_answer", "N");
+                        insertnew.Parameters.AddWithValue("quiz_name", quizname);
+                        insertnew.Parameters.AddWithValue("lastupdated", updatedate);
+
+                        db insertnewquestion = new db();
+                        insertnewquestion.ExecuteQuery(insertnew);
+
+                    }
+                }
+
+                else if (tipo == "unica")
+                {
+
+                    SqlDataReader dReader;
+                    SqlCommand single = new SqlCommand("select qq.title, a.questionoption from " + quizquestionoptionstable + " as a inner join " + quizquestionanswertable + " as b on a.questionid=b.questionid inner join " + quizquestionstable + " as qq on b.questionid=qq.questionorder where a.questionid=@qID");
+                    single.Parameters.AddWithValue("qID", questionID[questcounter]);
+
+                    db singlelist = new db();
+                    dReader = singlelist.returnDataReader(single);
+
+                    while (dReader.Read())
+                    {
+
+                        SqlCommand insertnew = new SqlCommand("insert into " + quizresponsestable + " (quizid, userid, question, user_answer, correct_answer, accurate_answer, quiz_name, lastupdated) values (@quizid, @userid, @question, @user_answer, @correct_answer, @accurate_answer, @quiz_name, @lastupdated);SELECT CAST(scope_identity() AS int)");
+                        insertnew.Parameters.AddWithValue("quizid", quizId);
+                        insertnew.Parameters.AddWithValue("userid", userid);
+                        insertnew.Parameters.AddWithValue("question", dReader["title"].ToString());
+                        insertnew.Parameters.AddWithValue("user_answer", "N");
+                        insertnew.Parameters.AddWithValue("correct_answer", dReader["questionoption"].ToString());
+                        insertnew.Parameters.AddWithValue("accurate_answer", "N");
+                        insertnew.Parameters.AddWithValue("quiz_name", quizname);
+                        insertnew.Parameters.AddWithValue("lastupdated", updatedate);
+
+                        db insertnewquestion = new db();
+                        insertnewquestion.ExecuteQuery(insertnew);
+
+                    }
+
+                }
+
+                questcounter++;
+
+            }
+
+
+        }
+    }
 
 
     protected void btnExit_Click(object sender, EventArgs e)

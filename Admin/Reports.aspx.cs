@@ -160,11 +160,11 @@ public partial class Admin_Reports : System.Web.UI.Page
             while (dReader.Read())
             {
 
-                if (dReader["accurate_answer"].ToString() == "Y")
+                if (dReader["accurate_answer"].ToString() == "1")
                 {
                     correct_counter++;
                 }
-                else if (dReader["accurate_answer"].ToString() == "N")
+                else if (dReader["accurate_answer"].ToString() == "0")
                 {
                     bad_counter++;
                 }
@@ -237,11 +237,11 @@ public partial class Admin_Reports : System.Web.UI.Page
             while (dReader.Read())
             {
 
-                if (dReader["accurate_answer"].ToString() == "Y")
+                if (dReader["accurate_answer"].ToString() == "1")
                 {
                     correct_counter++;
                 }
-                else if (dReader["accurate_answer"].ToString() == "N")
+                else if (dReader["accurate_answer"].ToString() == "0")
                 {
                     bad_counter++;
                 }
