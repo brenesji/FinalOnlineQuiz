@@ -11,7 +11,7 @@ using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-public partial class Admin_New_User : System.Web.UI.Page
+public partial class Admin_New_Administrator : System.Web.UI.Page
 {
 
     protected void Page_Load(object sender, EventArgs e)
@@ -67,7 +67,7 @@ public partial class Admin_New_User : System.Web.UI.Page
 
         DropDownList_Canton.Items.Clear();
         Add_Canton(Convert.ToInt32(DropDownList_Provincia.SelectedItem.Value));
-        
+
     }
 
     public void Add_Canton(int idprovincia)
@@ -111,8 +111,7 @@ public partial class Admin_New_User : System.Web.UI.Page
     protected void DropDownList_Canton_SelectedIndexChanged1(object sender, EventArgs e)
     {
         DropDownList_Distrito.Items.Clear();
-        DropDownList_HighSchool.Items.Clear();
-        Add_Distrito(Convert.ToInt32(DropDownList_Canton.SelectedItem.Value));      
+        Add_Distrito(Convert.ToInt32(DropDownList_Canton.SelectedItem.Value));
     }
 
 
@@ -150,48 +149,7 @@ public partial class Admin_New_User : System.Web.UI.Page
         {
             Response.Write(ex.Message);
         }
-        Add_Institucion(Convert.ToInt32(DropDownList_Canton.SelectedItem.Value));
     }
-
-
-    public void Add_Institucion(int idcanton)
-    {
-        string connection = "server=psychotestdb.database.windows.net;database=quizdb;user=brenesji;pwd=DesarrolloApp123";
-
-        string selectSQL = "SELECT ID_Colegio, Nombre FROM Colegios Where ID_Canton=" + idcanton + ";";
-        SqlConnection con = new SqlConnection(connection);
-        SqlCommand cmd = new SqlCommand(selectSQL, con);
-        SqlDataReader reader;
-        try
-        {
-            ListItem newItem = new ListItem();
-            newItem.Text = "Colegio";
-            newItem.Value = "0";
-            DropDownList_HighSchool.Items.Add(newItem);
-            con.Open();
-            reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                ListItem newItem1 = new ListItem();
-                newItem1.Text = reader["Nombre"].ToString();
-                newItem1.Value = reader["ID_Colegio"].ToString();
-                DropDownList_HighSchool.Items.Add(newItem1);
-            }
-
-            reader.Close();
-            reader.Dispose();
-            con.Close();
-            con.Dispose();
-            cmd.Dispose();
-        }
-        catch (Exception ex)
-        {
-            Response.Write(ex.Message);
-        }
-    }
-
-
 
     public void Add_Pais()
     {
@@ -236,7 +194,7 @@ public partial class Admin_New_User : System.Web.UI.Page
 
 
         Insert_Student(txt_IDusuario.Text, txt_Name.Text, txt_FirstName.Text, txt_LastName.Text,
-        DropDownList_Provincia.Text, DropDownList_Canton.Text, DropDownList_Distrito.Text, DropDownList_HighSchool.Text,
+        DropDownList_Provincia.Text, DropDownList_Canton.Text, DropDownList_Distrito.Text,
         DropDownList_Gender.Text, txt_Telefono.Text, Txt_Date.Text, DropDownList_Country.Text,
         txt_Password.Text, txt_Cedula.Text);
         register.Visible = false;
@@ -252,11 +210,11 @@ public partial class Admin_New_User : System.Web.UI.Page
     }
 
 
-    public void Insert_Student(string iID_Usuario, string iNombre, string iPrimer_Apellido, string iSegundo_Apellido, string iProvincia, string iCanton, string iDistrito, string iInstitucion, string isexo, string itelefono, string iFecha, string iNacionalidad, string iPassword1, string iCedula)
+    public void Insert_Student(string iID_Usuario, string iNombre, string iPrimer_Apellido, string iSegundo_Apellido, string iProvincia, string iCanton, string iDistrito, string isexo, string itelefono, string iFecha, string iNacionalidad, string iPassword1, string iCedula)
     {
         try
         {
-            string insertSQL = "INSERT INTO usuarios VALUES ('" + iID_Usuario + "','" + iNombre + "','" + iPrimer_Apellido + "','" + iSegundo_Apellido + "','" + iProvincia + "','" + iCanton + "','" + iDistrito + "','" + iInstitucion + "','" + isexo + "','" + itelefono + "','" + iFecha + "','" + iNacionalidad + "','" + iPassword1 + "','" + iCedula + "','U' );";
+            string insertSQL = "INSERT INTO usuarios VALUES ('" + iID_Usuario + "','" + iNombre + "','" + iPrimer_Apellido + "','" + iSegundo_Apellido + "','" + iProvincia + "','" + iCanton + "','" + iDistrito + "','" + "0" + "','" + isexo + "','" + itelefono + "','" + iFecha + "','" + iNacionalidad + "','" + iPassword1 + "','" + iCedula + "','A' );";
             string connection = "server=psychotestdb.database.windows.net;database=quizdb;user=brenesji;pwd=DesarrolloApp123";
             SqlConnection con = new SqlConnection(connection);
             SqlCommand cmd = new SqlCommand(insertSQL, con);
@@ -278,9 +236,4 @@ public partial class Admin_New_User : System.Web.UI.Page
         Response.Redirect("~/Admin/Homepage.aspx");
     }
 
-
-
-
-
-    
 }

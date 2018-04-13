@@ -104,6 +104,29 @@ public partial class Admin_Reports : System.Web.UI.Page
 
         }
 
+        else if (reporttype == "por prueba por fecha")
+        {
+            namereportdiv.Visible = false;
+            emailreportdiv.Visible = false;
+            studentsreportdiv.Visible = false;
+            addressreportdiv.Visible = false;
+            schoolreportdiv.Visible = false;
+            genderreportdiv.Visible = false;
+            FechaStudents1.Visible = false;
+            FechaStudents2.Visible = false;
+            FechaAddress1.Visible = false;
+            FechaAddress2.Visible = false;
+            FechaSchool1.Visible = false;
+            FechaSchool2.Visible = false;
+            FechaGender1.Visible = false;
+            FechaGender2.Visible = false;
+            FechaExam1.Visible = true;
+            FechaExam2.Visible = true;
+            examreportdiv.Visible = true;
+            Add_Exam();
+
+        }
+        
 
 
 
@@ -531,6 +554,34 @@ public partial class Admin_Reports : System.Web.UI.Page
     }
 
 
+
+    protected void examreportsubmit_Click(object sender, EventArgs e)
+    {
+
+
+        DataTable dTable = new DataTable();
+        SqlCommand cmd = new SqlCommand("select distinct qr.question, qq.category, qr.userid, qr.accurate_answer from quiz_questions as qq inner join quiz_responses as qr on qq.title=qr.question where qr.quiz_name=@exam and qr.lastupdated>@datefrom and qr.lastupdated<@dateto order by qr.question desc");
+        cmd.Parameters.AddWithValue("datefrom", txtdatefromexam.Text.Trim().ToLower());
+        cmd.Parameters.AddWithValue("dateto", txtdatetoexam.Text.Trim().ToLower());
+        cmd.Parameters.AddWithValue("exam", DropDownList_Exam.SelectedItem.Text);
+
+
+        db getquestionslist = new db();
+        dTable = getquestionslist.returnDataTable(cmd);
+
+        if (dTable.Rows.Count > 0)
+        {
+            GridViewExam1.DataSource = dTable;
+            GridViewExam1.DataBind();
+        }
+
+
+      
+
+    }
+
+
+
     protected void DropDownList_Provincia_SelectedIndexChanged(object sender, EventArgs e)
     {
 
@@ -662,6 +713,34 @@ public partial class Admin_Reports : System.Web.UI.Page
             }
 
      
+    }
+
+
+
+    public void Add_Exam()
+    {
+
+        SqlDataReader dReader;
+        SqlCommand cmd = new SqlCommand("select id, name from quizdetails");
+
+        db list = new db();
+        dReader = list.returnDataReader(cmd);
+
+        ListItem newItem = new ListItem();
+        newItem.Text = "Prueba";
+        newItem.Value = "0";
+        DropDownList_Exam.Items.Add(newItem);
+
+
+        while (dReader.Read())
+        {
+            ListItem newItem1 = new ListItem();
+            newItem1.Text = dReader["name"].ToString();
+            newItem1.Value = dReader["id"].ToString();
+            DropDownList_Exam.Items.Add(newItem1);
+        }
+
+
     }
 
 

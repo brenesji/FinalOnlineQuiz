@@ -46,6 +46,7 @@
                 <asp:ListItem Text="Por Direccion por fecha" Value="4" />
                 <asp:ListItem Text="Por Colegio por fecha" Value="5" />
                 <asp:ListItem Text="Por Sexo por fecha" Value="6" />
+                <asp:ListItem Text="Por Prueba por fecha" Value="7" />
             </asp:DropDownList><br />
             <br />
         </div>
@@ -390,7 +391,41 @@
             <asp:Button ID="genderreportbtn" runat="server" OnClick="genderreportsubmit_Click" Text="Consultar" class="btn btn-default btn-lg" ValidationGroup="genderreportvalidation" />
         </div>
 
-
+        <div id="examreportdiv" runat="server" class="text-center" visible="false">
+            <br />
+            <br />
+            <asp:Label ID="FechaExam1" runat="server" ForeColor="White" Visible="false" Style="float: left; text-align: center;" Text="Fecha Desde" /><asp:Label ID="FechaExam2" runat="server" ForeColor="White" Visible="false" Style="float: right; text-align: center;" Text="Fecha Hasta" /><br />
+            <asp:TextBox ID="txtdatefromexam" runat="server" class="btn btn-default btn-lg" Type="Date" Operator="DataTypeCheck" Height="50px" Width="300px" Style="float: left;" /><asp:TextBox ID="txtdatetoexam" runat="server" class="btn btn-default btn-lg" Type="Date" Operator="DataTypeCheck" Height="50px" Width="300px" Style="float: right;" /><br />
+            <br />
+            <br />
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator16" runat="server" ControlToValidate="txtdatefromexam" Display="Dynamic" ErrorMessage="Por favor ingrese una fecha" SetFocusOnError="true" ForeColor="Red" Style="float: left;" ValidationGroup="examreportvalidation" /><asp:RequiredFieldValidator ID="RequiredFieldValidator17" runat="server" ControlToValidate="txtdatetoexam" Display="Dynamic" ErrorMessage="Por favor ingrese una fecha" SetFocusOnError="true" ForeColor="Red" Style="float: right;" ValidationGroup="examreportvalidation" />
+            <br />
+            <br />
+            <asp:UpdatePanel runat="server" ID="UpdatePanel5">
+                <ContentTemplate>
+                    <b>Prueba</b><br />
+                    <asp:DropDownList ID="DropDownList_Exam" runat="server" class="btn btn-default btn-lg" Height="50px" Style="width: 300px;"></asp:DropDownList>
+                    <br />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator18" runat="server" ControlToValidate="DropDownList_Exam" Display="Dynamic" ErrorMessage="Por favor ingrese una prueba" SetFocusOnError="true" ForeColor="Red" ValidationGroup="examreportvalidation" /><br />
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <br />
+            <br />
+            <asp:GridView ID="GridViewExam1" runat="server" HorizontalAlign="Center" AutoGenerateColumns="false" Style="background-color: gray; color: white;">
+                <Columns>
+                    <asp:BoundField DataField="question" HeaderText="Pregunta" />
+                    <asp:BoundField DataField="category" HeaderText="Categoria" />
+                    <asp:BoundField DataField="userid" HeaderText="Correo Electronico" />
+                    <asp:BoundField DataField="accurate_answer" HeaderText="Correcta" />
+                </Columns>
+                <HeaderStyle BackColor="#666666" />
+            </asp:GridView>
+            <br />
+            <br />
+            <br />
+            <br />
+            <asp:Button ID="examreportbtn" runat="server" OnClick="examreportsubmit_Click" Text="Consultar" class="btn btn-default btn-lg" ValidationGroup="examreportvalidation" />
+        </div>
 
         <br />
         <br />

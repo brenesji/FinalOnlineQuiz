@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Admin.master" AutoEventWireup="true" CodeFile="viewresponses.aspx.cs" Inherits="Admin_viewresponses" %>
+﻿<%@ Page Title="" Language="C#"  AutoEventWireup="true" CodeFile="viewresponses.aspx.cs" Inherits="Admin_viewresponses" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:HiddenField ID="quizfield" runat="server" />
     <asp:Label ID="lblmessage" runat="server" ForeColor="#ff0000" Visible="false" /><br />
     <div id="responsesdiv" runat="server">
@@ -38,7 +38,7 @@
             <FooterTemplate>
                 </table>
             </FooterTemplate>
-        </asp:Repeater>        
+        </asp:Repeater>
     </div>
     <div style="clear: both"></div>
     <div id="exportdiv" runat="server">
@@ -48,7 +48,7 @@
         <h4>Export the result</h4>
         <br />
         <b>Select Type</b>&nbsp;&nbsp;<asp:DropDownList ID="fileexporttype" runat="server">
-            <asp:ListItem Selected="True">Excel</asp:ListItem>            
+            <asp:ListItem Selected="True">Excel</asp:ListItem>
             <asp:ListItem>Word</asp:ListItem>
             <asp:ListItem>PDF</asp:ListItem>
         </asp:DropDownList>&nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="exportbutton" runat="server" Text="Export" OnClick="exportbutton_click" Width="100px" Height="25px" CausesValidation="false" /><br />

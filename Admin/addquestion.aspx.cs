@@ -11,7 +11,7 @@ using System.Drawing;
 public partial class Admin_addquestion : System.Web.UI.Page
 {
     string quizdetailstable = "quizdetails";
-    string quizquestionstable = "quiz_questions";
+    string quiztotalquestionstable = "total_questions";
     string quizquestionoptionstable = "question_options";
     string quizquestionanswertable = "question_answer";
     string qstring = "0";
@@ -34,39 +34,9 @@ public partial class Admin_addquestion : System.Web.UI.Page
         HttpContext.Current.Response.AddHeader("Expires", "0");
 
 
-        if (!Page.IsPostBack)
-        {
-            //get the query string value
-            if (Page.Request["q"] == null)
-            {
-                addquestiondiv.InnerHtml = "<br /><span style='color:#FF0000; font-size:15px;'>Please select a quiz event first and try again.</span>";
-            }
-            else
-            {
-                qstring = Page.Request["q"].ToString();
-                quizId = Convert.ToInt32(qstring);
-
-                //strore the quiz id in hidden field
-                quizfield.Value = qstring;
-            }
-        }
-        else
-        {
-            if (int.TryParse(quizfield.Value, out tempval) == true)
-            {
-                quizId = tempval;
-            }
-            else
-            {
-                addquestiondiv.InnerHtml = "<br /><span style='color:#FF0000; font-size:15px;'>Please select a quiz event first and try again.</span>";
-            }
-        }
-
-       //set the home link
-        //HyperLink homelink = (HyperLink)Master.FindControl("homelnk");
-        //if (homelink != null)
+      //  if (!Page.IsPostBack)
         //{
-         //   homelink.NavigateUrl = "setquestions?q=" + quizId;
+
         //}
 
         //add javascript event
@@ -154,8 +124,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
                     imagebytes = br.ReadBytes((Int32)fs.Length);
 
 
-                    SqlCommand insertnew = new SqlCommand("insert into " + quizquestionstable + " (quizid, questionorder, type, title, lastupdated, image_name, content_type, data, category) values (@quizid, @questionorder, @type, @title, @lastupdated, @image_name, @content_type, @data, @category)");
-                    insertnew.Parameters.AddWithValue("quizid", quizId);
+                    SqlCommand insertnew = new SqlCommand("insert into " + quiztotalquestionstable + " (questionorder, type, title, lastupdated, image_name, content_type, data, category) values (@questionorder, @type, @title, @lastupdated, @image_name, @content_type, @data, @category)");
                     insertnew.Parameters.AddWithValue("questionorder", qorder);
                     insertnew.Parameters.AddWithValue("title", multipleoptionquestion);
                     insertnew.Parameters.AddWithValue("type", qtype);
@@ -274,8 +243,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
 
                 {
                     //insert the question
-                    SqlCommand insertnewquestioncmd = new SqlCommand("insert into " + quizquestionstable + " (quizid, questionorder, title, type, lastupdated, category) values (@quizid, @questionorder, @title, @type, @lastupdated, @category);SELECT CAST(scope_identity() AS int)");
-                    insertnewquestioncmd.Parameters.AddWithValue("quizid", quizId);
+                    SqlCommand insertnewquestioncmd = new SqlCommand("insert into " + quiztotalquestionstable + " (questionorder, title, type, lastupdated, category) values (@questionorder, @title, @type, @lastupdated, @category);SELECT CAST(scope_identity() AS int)");
                     insertnewquestioncmd.Parameters.AddWithValue("questionorder", qorder);
                     insertnewquestioncmd.Parameters.AddWithValue("title", multipleoptionquestion);
                     insertnewquestioncmd.Parameters.AddWithValue("type", qtype);
@@ -490,8 +458,8 @@ public partial class Admin_addquestion : System.Web.UI.Page
     {
         int temporder = 0;
         SqlDataReader dreader;
-        SqlCommand findorder = new SqlCommand("select Top 1* from " + quizquestionstable + " where quizid=@quizid order by 'questionorder' Desc");
-        findorder.Parameters.AddWithValue("quizid", quizId);
+        SqlCommand findorder = new SqlCommand("select Top 1* from " + quiztotalquestionstable + " order by questionorder Desc");
+
 
         db getorder = new db();
         dreader = getorder.returnDataReader(findorder);
@@ -547,7 +515,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
     {
         int temporder = 0;
         SqlDataReader dreader;
-        SqlCommand findid = new SqlCommand("select id from " + quizquestionstable + " where questionorder=@qorder ");
+        SqlCommand findid = new SqlCommand("select id from " + quiztotalquestionstable + " where questionorder=@qorder ");
         findid.Parameters.AddWithValue("qorder", qorder);
 
         db getorder = new db();
@@ -601,8 +569,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
                 imagebytes = br.ReadBytes((Int32)fs.Length);
 
 
-                SqlCommand insertnew = new SqlCommand("insert into " + quizquestionstable + " (quizid, questionorder, type, title, lastupdated, image_name, content_type, data, category) values (@quizid, @questionorder, @type, @title, @lastupdated, @image_name, @content_type, @data, @category)");
-                insertnew.Parameters.AddWithValue("quizid", quizId);
+                SqlCommand insertnew = new SqlCommand("insert into " + quiztotalquestionstable + " (questionorder, type, title, lastupdated, image_name, content_type, data, category) values (@questionorder, @type, @title, @lastupdated, @image_name, @content_type, @data, @category)");
                 insertnew.Parameters.AddWithValue("questionorder", qorder);
                 insertnew.Parameters.AddWithValue("title", textoptionquestion);
                 insertnew.Parameters.AddWithValue("type", qtype);
@@ -651,8 +618,7 @@ public partial class Admin_addquestion : System.Web.UI.Page
             else if (ImageCheckBox.Checked == false & uploadedBytes == null)
 
             {
-                SqlCommand insertnew = new SqlCommand("insert into " + quizquestionstable + " (quizid, questionorder, title, type, lastupdated, category) values (@quizid, @questionorder, @title, @type, @lastupdated, @category);SELECT CAST(scope_identity() AS int)");
-                insertnew.Parameters.AddWithValue("quizid", quizId);
+                SqlCommand insertnew = new SqlCommand("insert into " + quiztotalquestionstable + " (questionorder, title, type, lastupdated, category) values (@questionorder, @title, @type, @lastupdated, @category);SELECT CAST(scope_identity() AS int)");
                 insertnew.Parameters.AddWithValue("questionorder", qorder);
                 insertnew.Parameters.AddWithValue("type", qtype);
                 insertnew.Parameters.AddWithValue("title", textoptionquestion);

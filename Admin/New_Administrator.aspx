@@ -1,16 +1,17 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="New_User.aspx.cs" Inherits="Admin_New_User" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="New_Administrator.aspx.cs" Inherits="Admin_New_Administrator" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
 
     <!-- Para Date PickUp -->
+
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" type="text/css" media="all" />
     <link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
     <script src="../Scripts/jquery-1.8.1.min.js" type="text/javascript"></script>
@@ -19,7 +20,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#<%= Txt_Date.ClientID  %>").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true });
+            $("#<%= Txt_Date.ClientID  %>").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true});
         });
     </script>
 
@@ -29,7 +30,6 @@
             display: none;
         }
     </style>
-    <!-- Para Date PickUp -->
 
     <title>Universidad Hispanoamericana - Registro</title>
 
@@ -48,13 +48,16 @@
 <div style="float: left; padding-left: 15px;">
     <asp:hyperlink id="homelnk" runat="server" class="fa fa-home" font-size="XX-Large" navigateurl="~/Admin/HomePage.aspx"></asp:hyperlink>
 </div>
+<body>
+</body>
+
 
 <form id="form1" runat="server">
     <!-- Login Section -->
     <section id="login" class="content-section text-center">
         <div id="register" runat="server" class="container">
             <div class="col-lg-8 mx-auto">
-                <h2>Registro de Usuario</h2>
+                <h2>Registro de administrador</h2>
                 <div class="text-center">
 
                     <h2>Usuario & Contraseña</h2>
@@ -171,16 +174,16 @@
                             <td>
                                 <asp:scriptmanager runat="server" />
                                 <asp:updatepanel runat="server" id="UpdatePanel">
-                                        <ContentTemplate>
-                                            <asp:DropDownList ID="DropDownList_Provincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList_Provincia_SelectedIndexChanged" Style="width: 250px;"></asp:DropDownList>
-                                            <br />
-                                            <br />
-                                        </ContentTemplate>
-                                    </asp:updatepanel>
+                                    <ContentTemplate>
+                                      <asp:dropdownlist ID="DropDownList_Provincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList_Provincia_SelectedIndexChanged" style="width: 250px;"></asp:dropdownlist> <br /><br />
+                                    </ContentTemplate>
+                                  </asp:updatepanel>
                             </td>
+
                             <td class="text-left">
                                 <asp:requiredfieldvalidator runat="server" errormessage="Seleccione una Provincia" controltovalidate="DropDownList_Provincia" forecolor="Red"></asp:requiredfieldvalidator>
                             </td>
+                            >
                         </tr>
                         <tr>
                             <td>
@@ -190,13 +193,12 @@
                             </td>
                             <td>
                                 <asp:updatepanel runat="server" id="UpdatePanel1">
-                                        <ContentTemplate>
-                                            <asp:DropDownList ID="DropDownList_Canton" runat="server" OnSelectedIndexChanged="DropDownList_Canton_SelectedIndexChanged1" AutoPostBack="True" Style="width: 250px;"></asp:DropDownList>
-                                            <br />
-                                            <br />
-                                        </ContentTemplate>
-                                    </asp:updatepanel>
+                                  <ContentTemplate>
+                                    <asp:dropdownlist id="DropDownList_Canton" runat="server" OnSelectedIndexChanged="DropDownList_Canton_SelectedIndexChanged1" AutoPostBack="True" style="width: 250px;" ></asp:dropdownlist> <br /><br />
+                                  </ContentTemplate>
+                                </asp:updatepanel>
                             </td>
+
                             <td class="text-left">
                                 <asp:requiredfieldvalidator runat="server" errormessage="Seleccione un Canton" controltovalidate="DropDownList_Canton" forecolor="Red"></asp:requiredfieldvalidator>
                             </td>
@@ -209,34 +211,14 @@
                             </td>
                             <td>
                                 <asp:updatepanel runat="server" id="UpdatePanel2">
-                                        <ContentTemplate>
-                                            <asp:DropDownList ID="DropDownList_Distrito" runat="server" AutoPostBack="True" Style="width: 250px;"></asp:DropDownList>
-                                            <br />
-                                            <br />
-                                        </ContentTemplate>
-                                    </asp:updatepanel>
+                                 <ContentTemplate>
+                                   <asp:DropDownList ID="DropDownList_Distrito" runat="server" AutoPostBack="True" style="width: 250px;" ></asp:DropDownList> <br /><br />
+                                 </ContentTemplate>
+                               </asp:updatepanel>
                             </td>
+
                             <td class="text-left">
                                 <asp:requiredfieldvalidator runat="server" errormessage="Seleccione un Distrito " controltovalidate="DropDownList_Distrito" forecolor="Red"></asp:requiredfieldvalidator>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="text-justify">Colegio:</label>
-                                <br />
-                                <br />
-                            </td>
-                            <td>
-                                <asp:updatepanel runat="server" id="UpdatePanel3">
-                                        <ContentTemplate>
-                                            <asp:DropDownList ID="DropDownList_HighSchool" runat="server" Style="width: 250px;"></asp:DropDownList>
-                                            <br />
-                                            <br />
-                                        </ContentTemplate>
-                                    </asp:updatepanel>
-                            </td>
-                            <td class="text-left">
-                                <asp:requiredfieldvalidator runat="server" errormessage="Seleccione un Colegio" controltovalidate="DropDownList_HighSchool" forecolor="Red"></asp:requiredfieldvalidator>
                             </td>
                         </tr>
                         <tr>
@@ -247,9 +229,9 @@
                             </td>
                             <td>
                                 <asp:dropdownlist id="DropDownList_Gender" runat="server" style="width: 250px;">
-                                        <asp:ListItem Value="M">Hombre</asp:ListItem>
-                                        <asp:ListItem Value="F">Mujer</asp:ListItem>
-                                    </asp:dropdownlist>
+                                   <asp:ListItem Value="M">Hombre</asp:ListItem>
+                                   <asp:ListItem Value="F">Mujer</asp:ListItem>
+                                </asp:dropdownlist>
                                 <br />
                                 <br />
                             </td>
@@ -274,6 +256,7 @@
                                 <asp:requiredfieldvalidator runat="server" errormessage="Ingrese un Numero de Telefono" controltovalidate="txt_Telefono" forecolor="Red"></asp:requiredfieldvalidator>
                             </td>
                         </tr>
+
                         <tr>
                             <td>
                                 <label class="text-justify">Nacionalidad:</label>
@@ -282,14 +265,16 @@
                             </td>
                             <td>
                                 <asp:dropdownlist id="DropDownList_Country" runat="server" style="width: 250px;">
-                                    </asp:dropdownlist>
+                                </asp:dropdownlist>
                                 <br />
                                 <br />
                             </td>
                             <td class="text-left">
                                 <asp:requiredfieldvalidator runat="server" errormessage="Seleccione una Nacionalidad" controltovalidate="DropDownList_Country" forecolor="Red"></asp:requiredfieldvalidator>
                             </td>
+
                         </tr>
+
                         <tr>
                             <td>
                                 <label class="text-justify">Cedula:</label>
@@ -300,12 +285,19 @@
                                 <asp:textbox id="txt_Cedula" runat="server"></asp:textbox>
                                 <br />
                                 <br />
+                                <%--<asp:TextBox ID="txt_Cedula" runat="server" TextMode="Number"></asp:TextBox>--%>
+                                <br />
+                                <br />
                             </td>
                             <td class="text-left">
                                 <asp:requiredfieldvalidator runat="server" errormessage="Ingrese una Cedula" controltovalidate="txt_Cedula" forecolor="Red"></asp:requiredfieldvalidator>
                             </td>
                         </tr>
+
                         <tr>
+
+
+
                             <td>
                                 <label class="text-justify">Fecha de Nacimiento:</label>
                                 <br />
@@ -344,20 +336,20 @@
         </div>
 
     </section>
+
+    <!-- Footer -->
+
+
     <!-- Bootstrap core JavaScript -->
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </form>
 
-<body>
-    <!-- Footer -->
-    <footer>
-        <div>
-           <%-- <p>Copyright &copy; Your Website 2018</p>--%>
-        </div>
-    </footer>
-</body>
-
 </html>
+<footer>
+    <div class="container text-center">
+        <%--<p>Copyright &copy; Your Website 2018</p>--%>
+    </div>
+</footer>
 
 

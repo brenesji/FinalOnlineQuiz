@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Admin.master" AutoEventWireup="true" CodeFile="newquiz.aspx.cs" Inherits="Admin_newquiz" %>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="newquiz.aspx.cs" Inherits="Admin_newquiz" %>
 <%@ Register Assembly="FredCK.CKEditor" Namespace="FredCK.CKEditor" TagPrefix="FredCK" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">

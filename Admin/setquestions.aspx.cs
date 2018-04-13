@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 public partial class Admin_setquestions : System.Web.UI.Page
 {
     string quizdetailstable = "quizdetails";
+    string quiztotalquestionstable = "total_questions";
     string quizquestionstable = "quiz_questions";
     string quizquestionoptionstable = "question_options";
     string quizquestionanswertable = "question_answer";
@@ -29,41 +30,15 @@ public partial class Admin_setquestions : System.Web.UI.Page
 
         if (!Page.IsPostBack)
         {
-            //get the query string value
-            if (Page.Request["q"] == null)
-            {
-              questionsdiv.InnerHtml = "<br /><span style='color:#FF0000; font-size:15px;'>Please select a quiz event first and try again.</span>";
-            }
-            else
-            {
-             qstring = Page.Request["q"].ToString();
-            quizId = Convert.ToInt32(qstring);
-            //quizId = 1;
-                //strore the quiz id in hidden field
-          quizfield.Value = qstring;
                 bindquestions();
             }
         }
-        else
-        {
-            if (int.TryParse(quizfield.Value, out tempval) == true)
-            {
-                quizId = tempval;
-            }
-            else
-            {
-                questionsdiv.InnerHtml = "<br /><span style='color:#FF0000; font-size:15px;'>Please select a quiz event first and try again.</span>";
-            }
-        }
-
-        //set the new question link
-        addquestionlnk.HRef = "addquestion?q=" + quizId;
-    }
+        
 
     protected void bindquestions()
     {
         DataTable dTable = new DataTable();
-        SqlCommand getquestions = new SqlCommand("select id, title, type from " + quizquestionstable + " order by questionorder ASC");
+        SqlCommand getquestions = new SqlCommand("select id, title, type from " + quiztotalquestionstable + " order by questionorder ASC");
         getquestions.Parameters.AddWithValue("quizid", quizId);
 
         db getquestionslist = new db();
@@ -104,6 +79,12 @@ public partial class Admin_setquestions : System.Web.UI.Page
 
             db deleterequest = new db();
             deleterequest.ExecuteQuery(deletequestion);
+
+            SqlCommand deletequestion1 = new SqlCommand("delete from " + quiztotalquestionstable + " where id=@questionid");
+            deletequestion1.Parameters.AddWithValue("questionid", arrKeys[0]);
+
+            db deleterequest1 = new db();
+            deleterequest.ExecuteQuery(deletequestion1);
 
             bindquestions();
         }

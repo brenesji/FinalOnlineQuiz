@@ -15,6 +15,7 @@ using System.Configuration;
 public partial class Admin_editquestion : System.Web.UI.Page
 {
     string quizdetailstable = "quizdetails";
+    string quiztotalquestionstable = "total_questions";
     string quizquestionstable = "quiz_questions";
     string quizquestionoptionstable = "question_options";
     string quizquestionanswertable = "question_answer";
@@ -79,7 +80,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
     protected void bindquestion()
     {
         SqlDataReader dreader;
-        SqlCommand getquestioncmd = new SqlCommand("select id, quizid, type, title, category from " + quizquestionstable + " where id=@questionid");
+        SqlCommand getquestioncmd = new SqlCommand("select id, type, title, category from " + quiztotalquestionstable + " where id=@questionid");
         getquestioncmd.Parameters.AddWithValue("questionid", qId);
 
         db getquestion = new db();
@@ -94,7 +95,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
             while (dreader.Read())
             {
                 //set the home link
-                string quizidstr = dreader["quizid"].ToString();
+                //string quizidstr = dreader["quizid"].ToString();
                // HyperLink homelink = (HyperLink)Master.FindControl("homelnk");
                // if (homelink != null)
                // {
@@ -172,7 +173,7 @@ public partial class Admin_editquestion : System.Web.UI.Page
     {
         SqlDataReader dreader;
         Byte[] ArrayIn = { };
-        SqlCommand cmd = new SqlCommand("select data from " + quizquestionstable + " where id=@qId");
+        SqlCommand cmd = new SqlCommand("select data from " + quiztotalquestionstable + " where id=@qId");
         cmd.Parameters.AddWithValue("qId", qId);
 
         db getorder = new db();
@@ -325,18 +326,31 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 BinaryReader br = new BinaryReader(fs);
                 imagebytes = br.ReadBytes((Int32)fs.Length);
 
-                SqlCommand updatequestioncmd = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated, image_name=@image_name, content_type=@content_type, data=@data, category=@category where id=@questionid");
+                SqlCommand updatequestioncmd = new SqlCommand("update " + quiztotalquestionstable + " set title=@title, lastupdated=@lastupdated, image_name=@image_name, content_type=@content_type, data=@data where id=@questionid");
                 updatequestioncmd.Parameters.AddWithValue("questionid", qId);
                 updatequestioncmd.Parameters.AddWithValue("title", questionstr);
                 updatequestioncmd.Parameters.AddWithValue("lastupdated", updatedate);
                 updatequestioncmd.Parameters.AddWithValue("image_name", imageFilename);
                 updatequestioncmd.Parameters.AddWithValue("content_type", contenttype);
                 updatequestioncmd.Parameters.AddWithValue("data", uploadedBytes);
-                updatequestioncmd.Parameters.AddWithValue("category", category);
+     
 
                 db updatequestion = new db();
                 updatequestion.ExecuteQuery(updatequestioncmd);
 
+                SqlCommand updatequestioncmd1 = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated, image_name=@image_name, content_type=@content_type, data=@data where id=@questionid");
+                updatequestioncmd1.Parameters.AddWithValue("questionid", qId);
+                updatequestioncmd1.Parameters.AddWithValue("title", questionstr);
+                updatequestioncmd1.Parameters.AddWithValue("lastupdated", updatedate);
+                updatequestioncmd1.Parameters.AddWithValue("image_name", imageFilename);
+                updatequestioncmd1.Parameters.AddWithValue("content_type", contenttype);
+                updatequestioncmd1.Parameters.AddWithValue("data", uploadedBytes);
+     
+
+                db updatequestion1 = new db();
+                updatequestion1.ExecuteQuery(updatequestioncmd1);
+
+                
                 //update answer
                 SqlCommand updateanswercmd = new SqlCommand("update " + quizquestionanswertable + " set optionid=@optionid, lastupdated=@lastupdated where questionid=@questionid");
                 updateanswercmd.Parameters.AddWithValue("questionid", qId);
@@ -357,14 +371,22 @@ public partial class Admin_editquestion : System.Web.UI.Page
             else
             {
                 //update question
-                SqlCommand updatequestioncmd = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated, category=@category where id=@questionid");
+                SqlCommand updatequestioncmd = new SqlCommand("update " + quiztotalquestionstable + " set title=@title, lastupdated=@lastupdated where id=@questionid");
                 updatequestioncmd.Parameters.AddWithValue("questionid", qId);
                 updatequestioncmd.Parameters.AddWithValue("title", questionstr);
                 updatequestioncmd.Parameters.AddWithValue("lastupdated", updatedate);
-                updatequestioncmd.Parameters.AddWithValue("category", category);
 
                 db updatequestion = new db();
                 updatequestion.ExecuteQuery(updatequestioncmd);
+
+
+                SqlCommand updatequestioncmd1 = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated where id=@questionid");
+                updatequestioncmd1.Parameters.AddWithValue("questionid", qId);
+                updatequestioncmd1.Parameters.AddWithValue("title", questionstr);
+                updatequestioncmd1.Parameters.AddWithValue("lastupdated", updatedate);
+
+                db updatequestion1 = new db();
+                updatequestion1.ExecuteQuery(updatequestioncmd1);
 
                 //update answer
                 SqlCommand updateanswercmd = new SqlCommand("update " + quizquestionanswertable + " set optionid=@optionid, lastupdated=@lastupdated where questionid=@questionid");
@@ -418,17 +440,27 @@ public partial class Admin_editquestion : System.Web.UI.Page
                 BinaryReader br = new BinaryReader(fs);
                 imagebytes = br.ReadBytes((Int32)fs.Length);
 
-                SqlCommand updatequestioncmd = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated, image_name=@image_name, content_type=@content_type, data=@data, category=@category where id=@questionid");
+                SqlCommand updatequestioncmd = new SqlCommand("update " + quiztotalquestionstable + " set title=@title, lastupdated=@lastupdated, image_name=@image_name, content_type=@content_type, data=@data where id=@questionid");
                 updatequestioncmd.Parameters.AddWithValue("questionid", qId);
                 updatequestioncmd.Parameters.AddWithValue("title", questionstr);
                 updatequestioncmd.Parameters.AddWithValue("lastupdated", updatedate);
                 updatequestioncmd.Parameters.AddWithValue("image_name", imageFilename);
                 updatequestioncmd.Parameters.AddWithValue("content_type", contenttype);
                 updatequestioncmd.Parameters.AddWithValue("data", uploadedBytes);
-                updatequestioncmd.Parameters.AddWithValue("category", category);
 
                 db updatequestion = new db();
                 updatequestion.ExecuteQuery(updatequestioncmd);
+
+                SqlCommand updatequestioncmd1 = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated, image_name=@image_name, content_type=@content_type, data=@data where id=@questionid");
+                updatequestioncmd1.Parameters.AddWithValue("questionid", qId);
+                updatequestioncmd1.Parameters.AddWithValue("title", questionstr);
+                updatequestioncmd1.Parameters.AddWithValue("lastupdated", updatedate);
+                updatequestioncmd1.Parameters.AddWithValue("image_name", imageFilename);
+                updatequestioncmd1.Parameters.AddWithValue("content_type", contenttype);
+                updatequestioncmd1.Parameters.AddWithValue("data", uploadedBytes);
+
+                db updatequestion1 = new db();
+                updatequestion1.ExecuteQuery(updatequestioncmd1);
 
                 //update answer
                 SqlCommand updateanswercmd = new SqlCommand("update " + quizquestionoptionstable + " set questionoption=@questionoption, lastupdated=@lastupdated where questionid=@questionid");
@@ -450,14 +482,21 @@ public partial class Admin_editquestion : System.Web.UI.Page
             }
             else
             {
-                SqlCommand updatequestioncmd = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated, category=@category where id=@questionid");
+                SqlCommand updatequestioncmd = new SqlCommand("update " + quiztotalquestionstable + " set title=@title, lastupdated=@lastupdated where id=@questionid");
                 updatequestioncmd.Parameters.AddWithValue("questionid", qId);
                 updatequestioncmd.Parameters.AddWithValue("title", questionstr);
                 updatequestioncmd.Parameters.AddWithValue("lastupdated", updatedate);
-                updatequestioncmd.Parameters.AddWithValue("category", category);
 
                 db updatequestion = new db();
                 updatequestion.ExecuteQuery(updatequestioncmd);
+
+                SqlCommand updatequestioncmd1 = new SqlCommand("update " + quizquestionstable + " set title=@title, lastupdated=@lastupdated where id=@questionid");
+                updatequestioncmd1.Parameters.AddWithValue("questionid", qId);
+                updatequestioncmd1.Parameters.AddWithValue("title", questionstr);
+                updatequestioncmd1.Parameters.AddWithValue("lastupdated", updatedate);
+
+                db updatequestion1 = new db();
+                updatequestion1.ExecuteQuery(updatequestioncmd1);
 
                 //update answer
                 SqlCommand updateanswercmd = new SqlCommand("update " + quizquestionoptionstable + " set questionoption=@questionoption, lastupdated=@lastupdated where questionid=@questionid");
@@ -562,13 +601,21 @@ public partial class Admin_editquestion : System.Web.UI.Page
             {
                 category = ddlCategorias1.SelectedItem.Text.Trim();
 
-                SqlCommand updateoptioncmd = new SqlCommand("update " + quizquestionstable + " set category=@category, lastupdated=@lastupdated where id=@questionid");
+                SqlCommand updateoptioncmd = new SqlCommand("update " + quiztotalquestionstable + " set category=@category, lastupdated=@lastupdated where id=@questionid");
                 updateoptioncmd.Parameters.AddWithValue("questionid", qId);
                 updateoptioncmd.Parameters.AddWithValue("lastupdated", updatedate);
                 updateoptioncmd.Parameters.AddWithValue("category", category);
 
                 db updatequestion = new db();
                 updatequestion.ExecuteQuery(updateoptioncmd);
+
+                SqlCommand updateoptioncmd1 = new SqlCommand("update " + quizquestionstable + " set category=@category, lastupdated=@lastupdated where id=@questionid");
+                updateoptioncmd1.Parameters.AddWithValue("questionid", qId);
+                updateoptioncmd1.Parameters.AddWithValue("lastupdated", updatedate);
+                updateoptioncmd1.Parameters.AddWithValue("category", category);
+
+                db updatequestion1 = new db();
+                updatequestion1.ExecuteQuery(updateoptioncmd1);
 
                 lblmessage.Visible = true;
                 lblmessage.Text = "Categoria editada exitosamente";
@@ -579,13 +626,21 @@ public partial class Admin_editquestion : System.Web.UI.Page
             {
                 category = ddlCategorias2.SelectedItem.Text.Trim();
 
-                SqlCommand updateoptioncmd = new SqlCommand("update " + quizquestionstable + " set category=@category, lastupdated=@lastupdated where id=@questionid");
+                SqlCommand updateoptioncmd = new SqlCommand("update " + quiztotalquestionstable + " set category=@category, lastupdated=@lastupdated where id=@questionid");
                 updateoptioncmd.Parameters.AddWithValue("questionid", qId);
                 updateoptioncmd.Parameters.AddWithValue("lastupdated", updatedate);
                 updateoptioncmd.Parameters.AddWithValue("category", category);
 
                 db updatequestion = new db();
                 updatequestion.ExecuteQuery(updateoptioncmd);
+
+                SqlCommand updateoptioncmd1 = new SqlCommand("update " + quizquestionstable + " set category=@category, lastupdated=@lastupdated where id=@questionid");
+                updateoptioncmd1.Parameters.AddWithValue("questionid", qId);
+                updateoptioncmd1.Parameters.AddWithValue("lastupdated", updatedate);
+                updateoptioncmd1.Parameters.AddWithValue("category", category);
+
+                db updatequestion1 = new db();
+                updatequestion1.ExecuteQuery(updateoptioncmd1);
 
                 lblmessage.Visible = true;
                 lblmessage.Text = "Categoria editada exitosamente";
